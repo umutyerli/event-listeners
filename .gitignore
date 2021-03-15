@@ -42,6 +42,7 @@ Thumbs.db
 .project
 .recommenders/
 RemoteSystemsTempFiles/
+.idea/
 
 # VS Code Stuff
 ######################
