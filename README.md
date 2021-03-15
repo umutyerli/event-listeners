@@ -5,9 +5,6 @@ Event Listeners for Decision Manager
 - RuleTraceEventListener (Agenda Event Listener)
 - DMNTraceEventListener (DMN Event listener)
 
-Extra Event Listeners (Only for Process Automation Manager)
-- ProcessTraceEventListener (Process Event Listener)
-
 ## Installing Event Listener Artifact
 
 1. Go into the `event-listeners` directory, and install the Artifact
