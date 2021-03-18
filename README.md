@@ -46,17 +46,59 @@ Fill in Values:
 
 4. Deploy the HelloWorld project
 
-5. via REST API, send a CURL request to the KIE Server.
+5. via CURL command, send a POST request to the KIE Server.
+
+    Assuming kieserver:kieserver is the username and password with kieserver authorization.
+
+    `username:password`
 
     ```
-    curl -u kieserver:kieserver -X POST "http://localhost:8080/kie-server/services/rest/server/containers/instances/HelloWorld_1.0.0-SNAPSHOT" -H "accept: application/json" -H "content-type: application/json" -d "{\"commands\":[ { \"insert\":{ \"object\":{ \"com.newspace.helloworld.HelloWorldModel\":{ \"name\": \"Hello\", \"address\":\"1130 street\" } }, \"out-identifier\":\"item\" } }, { \"fire-all-rules\":{ } }]}"
+    curl -u kieserver:kieserver -X POST "http://localhost:8080/kie-server/services/rest/server/containers/instances/HelloWorld_1.0.0-SNAPSHOT" -H "accept: application/json" -H "content-type: application/json" -d "{\"lookup\" : \"default-stateless-ksession\",\"commands\":[ { \"insert\":{ \"object\":{ \"com.newspace.helloworld.HelloWorldModel\":{ \"name\": \"Hello\", \"address\":\"1130 street\" } }, \"out-identifier\":\"item\" } }, { \"fire-all-rules\":{ } }]}"
+    ```
+
+    OR via Postman, send a POST request to the KIE Server
+
+    ```
+    URL: http://localhost:8080/kie-server/services/rest/server/containers/instances/HelloWorld_1.0.0-SNAPSHOT
+
+    Authorization: 
+        Basic Auth
+            Username: kieserver
+            Password: kieserver
+
+    Headers:
+        Content-Type: application/json
+        Accept: application/json
+    
+    Body:
+
+        {
+            "lookup": "default-stateless-ksession",
+            "commands": [
+                {
+                "insert": {
+                    "object": {
+                    "com.newspace.helloworld.HelloWorldModel": {
+                        "name": "Hello",
+                        "address": "1130 street"
+                    }
+                    },
+                    "out-identifier": "item"
+                }
+                },
+                {
+                "fire-all-rules": {}
+                }
+            ]
+        }
+
     ```
 
 6. View JBoss Logs to validate that the sample WorkingMemoryListener worked.
     ```
     14:19:23,275 INFO  [com.example.listeners.WorkingMemoryListener] (default task-7) --> Fact inserted: type=class com.newspace.helloworld.HelloWorldModel, fact=com.newspace.helloworld.HelloWorldModel@71664494
-    14:19:23,275 INFO  [stdout] (default task-9) Insert Object
-    14:19:23,275 INFO  [stdout] (default task-9) Agenda Rule Output
+    14:19:23,275 INFO  [stdout] (default task-9) Rule 1 Fired::Insert Object into Working Memory
+    14:19:23,275 INFO  [stdout] (default task-9) Rule 2 Fired
     ```
 
 ### RuleTraceEventListener
@@ -87,21 +129,64 @@ Fill in Values:
 
 4. Deploy the HelloWorld project
 
-5. via REST API, send a CURL request to the KIE Server.
+
+5. via CURL command, send a POST request to the KIE Server.
+
+    Assuming kieserver:kieserver is the username and password with kieserver authorization.
+
+    `username:password`
 
     ```
     curl -u kieserver:kieserver -X POST "http://localhost:8080/kie-server/services/rest/server/containers/instances/HelloWorld_1.0.0-SNAPSHOT" -H "accept: application/json" -H "content-type: application/json" -d "{\"lookup\" : \"default-stateless-ksession\",\"commands\":[ { \"insert\":{ \"object\":{ \"com.newspace.helloworld.HelloWorldModel\":{ \"name\": \"Hello\", \"address\":\"1130 street\" } }, \"out-identifier\":\"item\" } }, { \"fire-all-rules\":{ } }]}"
+    ```
+
+    OR via Postman, send a POST request to the KIE Server
+
+    ```
+    URL: http://localhost:8080/kie-server/services/rest/server/containers/instances/HelloWorld_1.0.0-SNAPSHOT
+
+    Authorization: 
+        Basic Auth
+            Username: kieserver
+            Password: kieserver
+
+    Headers:
+        Content-Type: application/json
+        Accept: application/json
+    
+    Body:
+
+        {
+            "lookup": "default-stateless-ksession",
+            "commands": [
+                {
+                "insert": {
+                    "object": {
+                    "com.newspace.helloworld.HelloWorldModel": {
+                        "name": "Hello",
+                        "address": "1130 street"
+                    }
+                    },
+                    "out-identifier": "item"
+                }
+                },
+                {
+                "fire-all-rules": {}
+                }
+            ]
+        }
+        
     ```
 
 6. View JBoss Logs to validate that the sample RuleTraceEventListener worked.
     ```
     14:43:16,067 INFO  [com.example.listener.RuleTraceEventListener] (default task-9) matchCreated: ==>[ActivationCreatedEvent: getActivation()=[[ Rule1 active=false ] [ [fact 0:1:278567249:278567249:1:DEFAULT:NON_TRAIT:com.newspace.helloworld.HelloWorldModel:com.newspace.helloworld.HelloWorldModel@109a9951] ] ], getKnowledgeRuntime()=KieSession[0]]
     14:43:16,069 INFO  [com.example.listener.RuleTraceEventListener] (default task-9) beforeMatchFired: ==>[BeforeActivationFiredEvent:  getActivation()=[[ Rule1 active=false ] [ [fact 0:1:278567249:278567249:1:DEFAULT:NON_TRAIT:com.newspace.helloworld.HelloWorldModel:com.newspace.helloworld.HelloWorldModel@109a9951] ] ], getKnowledgeRuntime()=KieSession[0]]
-    14:43:16,071 INFO  [stdout] (default task-9) Insert Object
+    14:43:16,071 INFO  [stdout] (default task-9) Rule 1 Fired::Insert Object into Working Memory
     14:43:16,073 INFO  [com.example.listener.RuleTraceEventListener] (default task-9) afterMatchFired: ==>[AfterActivationFiredEvent: getActivation()=[[ Rule1 active=false ] [ [fact 0:1:278567249:278567249:1:DEFAULT:NON_TRAIT:com.newspace.helloworld.HelloWorldModel:com.newspace.helloworld.HelloWorldModel@109a9951] ] ], getKnowledgeRuntime()=KieSession[0]]
     14:43:16,074 INFO  [com.example.listener.RuleTraceEventListener] (default task-9) matchCreated: ==>[ActivationCreatedEvent: getActivation()=[[ Rule2 active=false ] [ [fact 0:0:795934628:1306428912:0:DEFAULT:NON_TRAIT:org.drools.core.reteoo.InitialFactImpl:org.drools.core.reteoo.InitialFactImpl@4dde85f0] ] ], getKnowledgeRuntime()=KieSession[0]]
     14:43:16,074 INFO  [com.example.listener.RuleTraceEventListener] (default task-9) beforeMatchFired: ==>[BeforeActivationFiredEvent:  getActivation()=[[ Rule2 active=false ] [ [fact 0:0:795934628:1306428912:0:DEFAULT:NON_TRAIT:org.drools.core.reteoo.InitialFactImpl:org.drools.core.reteoo.InitialFactImpl@4dde85f0] ] ], getKnowledgeRuntime()=KieSession[0]]
-    14:43:16,076 INFO  [stdout] (default task-9) Agenda Rule Output
+    14:43:16,076 INFO  [stdout] (default task-9) Rule 2 Fired
     14:43:16,076 INFO  [com.example.listener.RuleTraceEventListener] (default task-9) afterMatchFired: ==>[AfterActivationFiredEvent: getActivation()=[[ Rule2 active=false ] [ [fact 0:0:795934628:1306428912:0:DEFAULT:NON_TRAIT:org.drools.core.reteoo.InitialFactImpl:org.drools.core.reteoo.InitialFactImpl@4dde85f0] ] ], getKnowledgeRuntime()=KieSession[0]]
     ```
 
@@ -109,17 +194,9 @@ Fill in Values:
    
 DMNEventListener is not enabled in DecisionManager by default and must be enabled.
 
-DMNEventListener can be enabled in two ways:
-- Start standalone.sh with an `org.kie.dmn.runtime.listeners` property value. ```./standalone.sh -c standalone-full.xml -Dorg.kie.dmn.runtime.listeners.mylistener=com.example.listeners.DMNTraceEventListener```
-- Add a `org.kie.dmn.runtime.listeners` property value to project configuration.
+1. For Demo Purposes, create a `Traffic Violation` project from the Decision Manager provided sample projects. Click the Caret right of 'Add Project' -> Try Sample -> Select `Traffic_Violation` -> Ok.
 
-For this demo purpose, the DMN Event Listener will be enabled via the jboss start up property value.
-
-1. Start standalone.sh with an `org.kie.dmn.runtime.listeners` property value. ```./standalone.sh -c standalone-full.xml -Dorg.kie.dmn.runtime.listeners.mylistener=com.example.listeners.DMNTraceEventListener```
-
-2. For Demo Purposes, create a `Traffic Violation` project from the Decision Manager provided sample projects. Click the Caret right of 'Add Project' -> Try Sample -> Select `Traffic_Violation` -> Ok.
-
-3. Add the Event Listeners project as a dependency. Inside Decision Manager, go to Traffic_Violation -> Settings -> Dependencies -> 'Add a Dependency'
+2. Add the Event Listeners project as a dependency. Inside Decision Manager, go to Traffic_Violation -> Settings -> Dependencies -> 'Add a Dependency'
 
 Fill in the Values where needed:
 
@@ -131,13 +208,39 @@ Check `Whitelist all Packages`
 
 Save Settings
 
-4. Add the DMNTraceEventListener Event Listener to the project. Inside settings for Traffic_Violation, go to -> Deployments -> Event listeners -> Add Event Listener.
+3. Add the DMNTraceEventListener Event Listener to the project. Inside settings for Traffic_Violation, go to -> Deployments -> Event listeners -> Add Event Listener.
 
 Fill in Values:
 - Name `com.example.listeners.DMNTraceEventListener`
 - Resolver Type `Reflection`
 - Done
 - Save Settings
+
+4. Enable DMNEventListener for this project by updating the kmodule.xml. 
+
+-> Go to the `Traffic_Violation` project
+
+-> Inside the project, click on any created asset (this can be a DRL, Data Bojects, or Test Scenario file that is ALREADY created inside the Traffic Violation project)
+
+-> Click on the top left hand Caret underneath `Spaces`, Project explorer should come up.
+
+-> Click the Settings icon (6 Options should come up - Project View, Repository View, Show as Links, etc.)
+
+-> Click Repository View
+
+-> Go to src/main/resources/META-INF/kmodule.xml
+
+kmodule.xml should be edited and changed to:
+
+    ```
+    <kmodule xmlns="http://www.drools.org/xsd/kmodule">
+    <configuration>
+        <property key="org.kie.dmn.runtime.listeners.mylistener" value="com.example.listeners.DMNTraceEventListener"/>
+    </configuration>
+    </kmodule>
+    ```
+
+-> Save the file
 
 
 #### Testing
@@ -146,8 +249,44 @@ Fill in Values:
 
 6. via REST API, send a CURL request to the KIE Server.
 
+    Assuming kieserver:kieserver is the username and password with kieserver authorization.
+
+    `username:password`
+
     ```
     curl -u kieserver:kieserver -X POST "http://localhost:8080/kie-server/services/rest/server/containers/traffic-violation_1.0.0-SNAPSHOT/dmn" -H "accept: application/json" -H "content-type: application/json" -d "{ \"model-namespace\" : \"https://github.com/kiegroup/drools/kie-dmn/_A4BCA8B8-CF08-433F-93B2-A2598F19ECFF\", \"model-name\" : \"Traffic Violation\", \"dmn-context\" : { \"Driver\" : { \"Points\" : 15 }, \"Violation\" : { \"Type\" : \"speed\", \"Actual Speed\" : 135, \"Speed Limit\" : 100 } }}"
+    ```
+
+    OR via Postman, send a POST request to the KIE Server
+
+    ```
+    URL: http://localhost:8080/kie-server/services/rest/server/containers/traffic-violation_1.0.0-SNAPSHOT/dmn
+
+    Authorization: 
+        Basic Auth
+            Username: kieserver
+            Password: kieserver
+
+    Headers:
+        Content-Type: application/json
+        Accept: application/json
+    
+    Body:
+
+       {
+            "model-namespace": "https://github.com/kiegroup/drools/kie-dmn/_A4BCA8B8-CF08-433F-93B2-A2598F19ECFF",
+            "model-name": "Traffic Violation",
+            "dmn-context": {
+                "Driver": {
+                    "Points": 15
+                },
+                "Violation": {
+                    "Type": "speed",
+                    "Actual Speed": 135,
+                    "Speed Limit": 100
+                }
+            }
+        }  
     ```
 
 7. View JBoss Logs to validate that the sample DMNTraceEventListener worked.
