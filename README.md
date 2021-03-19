@@ -7,7 +7,7 @@ Event Listeners for Decision Manager
 
 ## Installing Event Listener Artifact
 
-1. Go into the `event-listeners` directory, and install the Artifact. Use the settings.xml provided in the repository
+1. Go into the `event-listeners` directory, and install the Artifact. Use the settings.xml provided in the repository to pull from the RedHat Maven Repositories.
    ```
    cd event-listeners
    mvn clean install -s config/settings.xml
