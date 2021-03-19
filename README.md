@@ -7,12 +7,15 @@ Event Listeners for Decision Manager
 
 ## Installing Event Listener Artifact
 
-1. Go into the `event-listeners` directory, and install the Artifact
+1. Go into the `event-listeners` directory, and install the Artifact. Use the settings.xml provided in the repository
    ```
    cd event-listeners
-   mvn clean install
+   mvn clean install -s config/settings.xml
    ```
-   
+
+## DM-HelloWorld Project to Git Repository
+
+This Repository contains a project called 'DM-HelloWorld' that will be used as demo in Decision Manager. In order for Decision Manager to import the DM-HelloWorld project, the project will need to come from a Git URL. Please create a new Git Repository and push the 'DM-HelloWorld' folder and its contents into the new Git Repository.
    
 ## Using Event Listeners with Decision Manager
 
@@ -20,7 +23,10 @@ The Decision Manager instance needs to be connected to a Maven Repository that h
 
 ### WorkingMemoryListener
 
-1. For Demo Purposes, import the `HelloWorld` Project from https://github.com/umutyerli/DM-HelloWorld into Decision Manager
+1. Import the `HelloWorld` Project into Decision Central. Go to -> MySpace -> Caret on the right of Add Project -> Import Project. Fill in the Git Repository URL with the URL of the Git Repository created in the 'DM-HelloWorld Project to Git Repository' section of this README. If the Git Repository is in a private repository, fill in the username and password with the proper authorization under `Show Authentication Options`
+
+![](img/img1.png)
+![](img/img2.png)
 
 2. Add the Event Listeners project as a dependency. Inside Decision Manager, go to HelloWorld -> Settings -> Dependencies -> 'Add a Dependency'
 
@@ -34,7 +40,11 @@ Check `Whitelist all Packages`
 
 Save Settings
 
-3. Add the WorkingMemoryListener Event Listener to the project. Inside settings for HelloWorld, go to -> KIE bases -> 'default-kbase KIE sessions (Click 'KIE sessions' hyperlink) -> Listeners -> Add Listener.
+![](img/img3.png)
+![](img/img4.png)
+![](img/img5.png)
+
+3. Add the WorkingMemoryListener Event Listener to the project. Inside settings for HelloWorld, go to -> KIE bases -> 'default-kbase' KIE sessions (Click 'KIE sessions' hyperlink) -> Listeners -> Add Listener.
 
 Fill in Values:
 - Type `com.example.listeners.WorkingMemoryListener`
@@ -42,9 +52,15 @@ Fill in Values:
 - Done
 - Save Settings
 
+![](img/img6.png)
+![](img/img7.png)
+![](img/img8.png)
+
 #### Testing
 
 4. Deploy the HelloWorld project
+
+![](img/img9.png)
 
 5. via CURL command, send a POST request to the KIE Server.
 
@@ -103,7 +119,10 @@ Fill in Values:
 
 ### RuleTraceEventListener
 
-1. For Demo Purposes, import the `HelloWorld` Project from https://github.com/umutyerli/DM-HelloWorld into Decision Manager
+1. Import the `HelloWorld` Project into Decision Central. Go to -> MySpace -> Caret on the right of Add Project -> Import Project. Fill in the Git Repository URL with the URL of the Git Repository created in the 'DM-HelloWorld Project to Git Repository' section of this README. If the Git Repository is in a private repository, fill in the username and password with the proper authorization under `Show Authentication Options`
+
+![](img/img1.png)
+![](img/img2.png)
 
 2. Add the Event Listeners project as a dependency. Inside Decision Manager, go to HelloWorld -> Settings -> Dependencies -> 'Add a Dependency'
 
@@ -117,7 +136,11 @@ Check `Whitelist all Packages`
 
 Save Settings
 
-3. Add the RuleTraceEventListener Event Listener to the project. Inside settings for HelloWorld, go to -> KIE bases -> 'default-kbase KIE sessions (Click 'KIE sessions' hyperlink) -> Listeners -> Add Listener.
+![](img/img3.png)
+![](img/img4.png)
+![](img/img5.png)
+
+3. Add the RuleTraceEventListener Event Listener to the project. Inside settings for HelloWorld, go to -> KIE bases -> 'default-kbase' KIE sessions (Click 'KIE sessions' hyperlink) -> Listeners -> Add Listener.
 
 Fill in Values:
 - Type `com.example.listeners.RuleTraceEventListener`
@@ -125,10 +148,15 @@ Fill in Values:
 - Done
 - Save Settings
 
+![](img/img6.png)
+![](img/img7.png)
+![](img/img8.png)
+
 #### Testing
 
 4. Deploy the HelloWorld project
 
+![](img/img9.png)
 
 5. via CURL command, send a POST request to the KIE Server.
 
@@ -196,6 +224,9 @@ DMNEventListener is not enabled in DecisionManager by default and must be enable
 
 1. For Demo Purposes, create a `Traffic Violation` project from the Decision Manager provided sample projects. Click the Caret right of 'Add Project' -> Try Sample -> Select `Traffic_Violation` -> Ok.
 
+![](img/img10.png)
+![](img/img11.png)
+
 2. Add the Event Listeners project as a dependency. Inside Decision Manager, go to Traffic_Violation -> Settings -> Dependencies -> 'Add a Dependency'
 
 Fill in the Values where needed:
@@ -208,6 +239,10 @@ Check `Whitelist all Packages`
 
 Save Settings
 
+![](img/img3.png)
+![](img/img4.png)
+![](img/img5.png)
+
 3. Add the DMNTraceEventListener Event Listener to the project. Inside settings for Traffic_Violation, go to -> Deployments -> Event listeners -> Add Event Listener.
 
 Fill in Values:
@@ -215,6 +250,8 @@ Fill in Values:
 - Resolver Type `Reflection`
 - Done
 - Save Settings
+
+![](img/img12.png)
 
 4. Enable DMNEventListener for this project by updating the kmodule.xml. 
 
@@ -233,19 +270,26 @@ Fill in Values:
 kmodule.xml should be edited and changed to:
 
     ```
-    <kmodule xmlns="http://www.drools.org/xsd/kmodule">
-    <configuration>
-        <property key="org.kie.dmn.runtime.listeners.mylistener" value="com.example.listeners.DMNTraceEventListener"/>
-    </configuration>
+    <kmodule xmlns="http://www.drools.org/xsd/kmodule" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <configuration>
+            <property key="org.kie.dmn.runtime.listeners.mylistener" value="com.example.listeners.DMNTraceEventListener"/>
+        </configuration>
     </kmodule>
     ```
 
 -> Save the file
 
+![](img/img13.png)
+![](img/img14.png)
+![](img/img15.png)
+![](img/img16.png)
+![](img/img17.png)
 
 #### Testing
 
 5. Deploy the Traffic Violation project
+
+![](img/img9.png)
 
 6. via REST API, send a CURL request to the KIE Server.
 
@@ -301,3 +345,21 @@ kmodule.xml should be edited and changed to:
     15:24:33,460 INFO  [com.example.listeners.DMNTraceEventListener] (default task-9) afterEvaluateContextEntry: AfterEvaluateContextEntryEventImpl{nodeName='Should the driver be suspended?', variableName='__RESULT__', variableId='null', expressionId='_1929D813-B1C9-43C5-9497-CE5D8B2B040C', expressionResult=Yes}
     ```
 
+
+## Troubleshooting
+
+### Incorrect / Old Logging Results from Event Listener
+
+If the expected result is not showing up on the logs after deploying the project and a POST request, the deployment may need to be deleted from the execution server and re-deployed.
+
+-> Menu
+-> Execution Servers
+-> Deployment Unit being deleted
+-> Stop
+-> Remove
+-> Re-deploy
+
+![](img/img18.png)
+![](img/img19.png)
+![](img/img20.png)
+![](img/img9.png)

@@ -1,0 +1,15 @@
+package com.newspace.helloworld;
+
+rule "Rule1"
+   when
+      item : HelloWorldModel(name == "Hello")
+   then
+      System.out.println("Rule 1 Fired::Insert Object into Working Memory");
+      insert(item);
+end
+rule "Rule2"
+    when
+        eval(true)
+    then
+         System.out.println( "Rule 2 Fired" );
+end
