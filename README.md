@@ -5,15 +5,17 @@ Event Listeners for Decision Manager
 - RuleTraceEventListener (Agenda Event Listener)
 - DMNTraceEventListener (DMN Event listener)
 
-## Installing Event Listener Artifact
+### Installing Event Listener Artifact
 
-1. Go into the `event-listeners` directory, and install the Artifact. Use the settings.xml provided in the repository to pull from the RedHat Maven Repositories.
+Go into the `event-listeners` directory, and install the Artifact. Use the settings.xml provided in the repository to pull from the RedHat Maven Repositories.
+
    ```
    cd event-listeners
    mvn clean install -s config/settings.xml
    ```
 
-## DM-HelloWorld Project to Git Repository
+
+### DM-HelloWorld Project to Git Repository
 
 This Repository contains a project called 'DM-HelloWorld' that will be used as demo in Decision Manager. In order for Decision Manager to import the DM-HelloWorld project, the project will need to come from a Git URL. Please create a new Git Repository and push the 'DM-HelloWorld' folder and its contents into the new Git Repository.
    
